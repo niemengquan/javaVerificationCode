@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: admin
@@ -9,8 +10,86 @@
 <html>
 <head>
     <title>Title</title>
+    <script type="application/javascript">
+        var index=1;
+        function addImg(e){
+            var parentDiv=document.getElementById("insert");
+            var topValue=0,leftValue=0;
+            var obj=parentDiv;
+            while (obj){
+                leftValue+=obj.offsetLeft;
+                topValue+=obj.offsetTop;
+                obj=obj.offsetParent;
+            }
+            e=e||window.event;
+            var left=e.clientX+document.body.scrollLeft - document.body.clientLeft-10;//-110px
+            var top=e.clientY+document.body.scrollTop -document.body.clientTop-10;//
+            var imgDivId="img_"+index++;
+
+            var newDiv =document.createElement("div");
+            parentDiv.appendChild(newDiv);
+
+            newDiv.id=imgDivId;
+            newDiv.style.position="relative";
+            newDiv.style.zIndex=index;
+            newDiv.style.width="20px";
+            newDiv.style.height="20px";
+            newDiv.style.top=top-topValue-150+10+"px";
+            newDiv.style.left=left-leftValue-300+"px";
+            newDiv.style.display="inline";
+            newDiv.setAttribute("onClick","removeSelf('"+imgDivId+"')");
+
+            var img=document.createElement("img");
+            newDiv.appendChild(img);
+            img.src="img/a.png";
+            img.style.width="20px";
+            img.style.height="20px";
+            img.style.top="0px";
+            img.style.left="0px";
+            img.style.position="absolute";
+            img.style.zIndex=index;
+        }
+        function removeSelf(id) {
+            document.getElementById("insert").removeChild(document.getElementById(id));
+        }
+        function login() {
+            var parentDiv=document.getElementById("insert");
+            var nodes=parentDiv.childNodes;
+            var result="";
+            for(var i=0;i<nodes.length;i++){
+                var id=nodes[i].id;
+                if(id||id.startsWith("img_")){
+                    var top=document.getElementById(id).style.top;
+                    var left=document.getElementById(id).style.left;
+                    result=result+top.replace("px","")+','+left.replace("px","")+';';
+                }
+            }
+            document.getElementById("location").value=result.substr(0,result.length-1);
+            document.getElementById("loginForm").submit();
+        }
+    </script>
 </head>
 <body>
+<div class="loginBox">
+    <div class="login_cont">
+        <ul class="login">
+            <form id="loginForm" action="${pageContext.request.contextPath}/login" method="post" >
+                <input type="hidden" name="location" id="location">
+                <li class="l_tit">邮箱/用户名/手机号</li>
+                <li class="mb_10"><input type="text" name="userName" class="login_input user_icon"></li>
+                <li class="l_tit">密码</li>
+                <li class="mb_10"><input type="password" name="password" class="login_input user_icon"></li>
+                <li>选出图片中的${tip}</li>
+                <li>
+                    <div id="insert">
+                        <img src="../targetImage/${file}" height="150" width="300" onclick="addImg()">
+                    </div>
+                </li>
+                <li><input type="button" value="" class="login_btn" onclick="login()"> </li>
+            </form>
+        </ul>
+    </div>
 
+</div>
 </body>
 </html>
