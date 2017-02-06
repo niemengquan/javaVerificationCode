@@ -85,7 +85,13 @@ public class Image {
         return new GenerateImageGroup(keyGroup,result);
     }
 
-    private static ImageResult mergeImage(List<BufferedImageWrap> imageWraps, String name) {
+    /**
+     * 生成验证码图片
+     * @param imageWraps
+     * @param tip
+     * @return
+     */
+    private static ImageResult mergeImage(List<BufferedImageWrap> imageWraps, String tip) {
         Collections.shuffle(imageWraps);
         //原始图片宽200px，高200px
         int width=200;
@@ -105,9 +111,30 @@ public class Image {
                 keysOrderList.add(order);
                 int x=(order%4)*200;
                 int y=order<4?0:200;
+                keySet.add(order);
+                keysOrder.append(order).append("(").append(x).append(",").append(y).append(")|");
             }
+            if (order < 4) {
+                destImage.setRGB(x1,0,width,high,rgb,0,width);//设置上半部分的RGB
+                x1+=width;
+            }else{
+                destImage.setRGB(x2,high,width,high,rgb,0,width);//设置上半部分的RGB
+                x1+=width;
+            }
+            order++;
         }
-        return null;
+        keysOrder.deleteCharAt(keysOrder.length()-1);
+        System.out.println("答案位置："+keysOrder.toString());
+        String fileName=UUID.randomUUID().toString().replaceAll("-","");
+        String fileUrl=""+fileName;
+        saveImage(destImage,fileUrl,"jpeg");
+
+        ImageResult ir=new ImageResult();
+        ir.setName(fileName+".jpeg");
+        ir.setKeySet(keySet);
+        ir.setUniqueKey(fileName);
+        ir.setTip(tip);
+        return ir;
     }
 
     private static void initImageGroup() {
