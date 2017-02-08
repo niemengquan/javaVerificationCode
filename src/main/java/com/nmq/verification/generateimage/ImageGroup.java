@@ -43,4 +43,13 @@ public class ImageGroup {
     public void setImages(Set<String> images) {
         this.images = images;
     }
+
+    @Override
+    public String toString() {
+        return "ImageGroup{" +
+                "name='" + name + '\'' +
+                ", count=" + count +
+                ", images=" + images +
+                '}';
+    }
 }
