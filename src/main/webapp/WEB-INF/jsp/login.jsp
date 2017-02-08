@@ -41,9 +41,9 @@
 
             var img=document.createElement("img");
             newDiv.appendChild(img);
-            img.src="img/a.png";
-            img.style.width="20px";
-            img.style.height="20px";
+            img.src="img/weixin.png";
+            img.style.width="40px";
+            img.style.height="40px";
             img.style.top="0px";
             img.style.left="0px";
             img.style.position="absolute";
@@ -82,7 +82,7 @@
                 <li>选出图片中的${tip}</li>
                 <li>
                     <div id="insert">
-                        <img src="../targetImage/${file}" height="150" width="300" onclick="addImg()">
+                        <img src="../../mergeImage/${file}" height="150" width="300" onclick="addImg()">
                     </div>
                 </li>
                 <li><input type="button" value="" class="login_btn" onclick="login()"> </li>
