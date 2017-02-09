@@ -12,7 +12,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Objects;
 
 /**
  * Created by niemengquan on 2017/2/4.
@@ -50,7 +49,7 @@ public class LoginController {
             return "ERROR";
         }
         ImageResult imageResult = Cache.get(note.getValue());
-        Cache.remove(note.getName());
+        Cache.remove(note.getValue());
         if(null==location||"".equals(location)){
             return "ERROR";
         }
@@ -68,7 +67,10 @@ public class LoginController {
             array[i][0]=Integer.parseInt(temp[0])+150-10;
             array[i][1]=Integer.parseInt(temp[1])+300;
         }
-
+        //所选答案的数量与目标答案数量不相等，返回错误
+        if(array.length!=imageResult.getKeySet().size()){
+            return false;
+        }
         for(int i=0;i<array.length;i++){
             int location=location(array[i][1],array[i][0]);
             if(!imageResult.getKeySet().contains(location)){
@@ -79,9 +81,9 @@ public class LoginController {
     }
 
     private int location(int x, int y) {
-        if(y>=0&&x<75){
+        if(y>=0&&y<75){
             return xLocation(x);
-        }else if(y>=75&&x<150){
+        }else if(y>=75&&y<=150){
            return xLocation(x)+4;
         }else{
             //脏数据
