@@ -130,8 +130,8 @@ public class Image {
         keysOrder.deleteCharAt(keysOrder.length()-1);
         System.out.println("答案位置："+keysOrder.toString());
         String fileName=UUID.randomUUID().toString().replaceAll("-","");
-//        String fileUrl=System.getProperty("webapp.root")+File.separator+"mergeImage"+File.separator+fileName;
-        String baseDir="E:\\java_workspace\\javaVerificationCode\\src\\main\\webapp\\mergeImage";
+        String baseDir=System.getProperty("webapp.root")+File.separator+"mergeImage";
+        //String baseDir="E:\\java_workspace\\javaVerificationCode\\src\\main\\webapp\\mergeImage";
         String fileUrl=baseDir+File.separator+fileName;
         saveImage(destImage,fileUrl,"jpeg");
 
@@ -150,8 +150,8 @@ public class Image {
        /* ImageGroup group1=new ImageGroup("土豆",2,"tudou/1.jpg","tudou/2.jpg");
         ImageGroup group2=new ImageGroup("兔子",2,"tuzi/1.jpg","tuzi/2.jpg");
         initMap(group1,group2);*/
-       // String baseDir=System.getProperty("webapp.root")+File.separator+"image";
-        String baseDir="E:\\java_workspace\\javaVerificationCode\\src\\main\\webapp\\image";
+        String baseDir=System.getProperty("webapp.root")+File.separator+"image";
+        //String baseDir="E:\\java_workspace\\javaVerificationCode\\src\\main\\webapp\\image";
         File baseDirFile=new File(baseDir);
         if(baseDirFile.exists()&&baseDirFile.isDirectory()){
             File[] files = baseDirFile.listFiles();
@@ -197,8 +197,8 @@ public class Image {
     }
 
     private static BufferedImage getBufferedImage(String fileUrl) throws IOException {
-        //TODO
-        String baseDir="E:\\java_workspace\\javaVerificationCode\\src\\main\\webapp\\image";
+        String baseDir=System.getProperty("webapp.root")+File.separator+"image";
+        //String baseDir="E:\\java_workspace\\javaVerificationCode\\src\\main\\webapp\\image";
         File f=new File(baseDir+File.separator+fileUrl);
         return ImageIO.read(f);
     }
