@@ -41,7 +41,7 @@
 
             var img=document.createElement("img");
             newDiv.appendChild(img);
-            img.src="img/weixin.png";
+            img.src="<%=request.getContextPath()%>/img/weixin.png";
             img.style.width="40px";
             img.style.height="40px";
             img.style.top="0px";
@@ -57,10 +57,11 @@
             var nodes=parentDiv.childNodes;
             var result="";
             for(var i=0;i<nodes.length;i++){
-                var id=nodes[i].id;
-                if(id||id.startsWith("img_")){
-                    var top=document.getElementById(id).style.top;
-                    var left=document.getElementById(id).style.left;
+                var imgId=nodes[i].id;
+                console.log(imgId);
+                if(imgId&&imgId.substring(0,4)=="img_"){
+                    var top=document.getElementById(imgId).style.top;
+                    var left=document.getElementById(imgId).style.left;
                     result=result+top.replace("px","")+','+left.replace("px","")+';';
                 }
             }
@@ -70,22 +71,22 @@
     </script>
 </head>
 <body>
-<div class="loginBox">
-    <div class="login_cont">
-        <ul class="login">
-            <form id="loginForm" action="${pageContext.request.contextPath}/login" method="post" >
+<div>
+    <div>
+        <ul>
+            <form id="loginForm" action="${pageContext.request.contextPath}/loginController/login.do" method="post" >
                 <input type="hidden" name="location" id="location">
                 <li class="l_tit">邮箱/用户名/手机号</li>
                 <li class="mb_10"><input type="text" name="userName" class="login_input user_icon"></li>
                 <li class="l_tit">密码</li>
                 <li class="mb_10"><input type="password" name="password" class="login_input user_icon"></li>
-                <li>选出图片中的${tip}</li>
-                <li>
+                <li>选出图片中的"${tip}"</li>
+                <li >
                     <div id="insert">
-                        <img src="../../mergeImage/${file}" height="150" width="300" onclick="addImg()">
+                        <img src="<%=request.getContextPath()%>/mergeImage/${file}" height="150" width="300" onclick="addImg()">
                     </div>
                 </li>
-                <li><input type="button" value="" class="login_btn" onclick="login()"> </li>
+                <li><input type="button" value="登录" class="login_btn" onclick="login()"> </li>
             </form>
         </ul>
     </div>
